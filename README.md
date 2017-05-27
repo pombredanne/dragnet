@@ -1,14 +1,14 @@
 
 Dragnet
-=====================================
+=======
 
 [![Build Status](https://api.travis-ci.org/seomoz/dragnet.png)](https://api.travis-ci.org/seomoz/dragnet.png)
 
-Dragnet isn't interested in the shiny chrome or boilerplate dressing of a 
-web page. It's interested in... 'just the facts.'  The machine learning
-models in Dragnet extract the main article content and optionally
-user generated comments from a web page.  They provide state
-of the art performance on variety of test benchmarks.
+Dragnet isn't interested in the shiny chrome or boilerplate dressing
+of a web page. It's interested in... 'just the facts.'  The machine
+learning models in Dragnet extract the main article content and
+optionally user generated comments from a web page.  They provide
+state of the art performance on variety of test benchmarks.
 
 For more information on our approach check out:
 
@@ -17,8 +17,8 @@ at WWW in 2013, gives an overview of the machine learning approach.
 * [A comparison](https://moz.com/devblog/benchmarking-python-content-extraction-algorithms-dragnet-readability-goose-and-eatiht/) of Dragnet and alternate content extraction packages.
 * [This blog post](https://moz.com/devblog/dragnet-content-extraction-from-diverse-feature-sets/) explains the intuition behind the algorithms.
 
-This project was originally inspired by 
-Kohlschütter et al, [Boilerplate Detection using Shallow Text Features](http://www.l3s.de/~kohlschuetter/publications/wsdm187-kohlschuetter.pdf) and 
+This project was originally inspired by
+Kohlschütter et al, [Boilerplate Detection using Shallow Text Features](http://www.l3s.de/~kohlschuetter/publications/wsdm187-kohlschuetter.pdf) and
 Weninger et al [CETR -- Content Extraction with Tag Ratios](http://web.engr.illinois.edu/~weninge1/cetr/), and more recently by [Readability](https://github.com/buriy/python-readability).
 
 # GETTING STARTED
@@ -58,20 +58,47 @@ Otherwise, we try to guess the encoding from a `meta` tag or specified
 
 ## Installing
 
-The build requires numpy, lxml and a new version of Cython, so first make sure
-they are installed, then install Dragnet:
-
-```
-pip install numpy
-pip install --upgrade cython
-pip install lxml
-pip install dragnet
-```
-
 Dragnet is written in Python (developed with 2.7, not tested on 3)
 and built on the numpy/scipy/Cython numerical computing environment.
 In addition we use <a href="http://lxml.de/">lxml</a> (libxml2)
 for HTML parsing.
+
+We recommend installing from the master branch to ensure you have the latest
+version.
+
+### Installing with Vagrant:
+
+This is the easiest method to install Dragnet and builds a Vagrant
+virtual machine with Dragnet and it's dependencies.
+
+1. Install [vagrant](https://www.vagrantup.com/downloads.html).
+2. Install [Virtual Box](https://www.virtualbox.org/wiki/Downloads).
+3. Clone the master branch: `git clone git@github.com:seomoz/dragnet.git`
+4. Bring up the vagrant box: `vagrant up`
+5. Log into the vagrant box:
+
+```bash
+vagrant ssh
+# these should now pass
+$ make test
+```
+
+### Installing without Vagrant
+
+1.  Install the dependencies need for Dragnet.  The build depends on numpy,
+Cython and lxml (which in turn depends on `libxml2`).  We use `provision.sh`
+to provision the Vagrant VM so you can use it as a template and modify
+as appropriate for your operation system.
+2.  Clone the master branch: `git clone git@github.com:seomoz/dragnet.git`
+3.  Install the requirements: `sudo pip install -r dragnet/requirements.txt`
+4.  Build dragnet
+
+```bash
+$ cd dragnet
+$ sudo make install
+# these should now pass
+$ make test
+```
 
 # Contributing
 

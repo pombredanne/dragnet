@@ -1,14 +1,17 @@
+"""
+inspired by
+Weninger, Tim, William H. Hsu, and Jiawei Han. "CETR: content extraction via
+    tag ratios." Proceedings of the 19th international conference on
+    World wide web. ACM, 2010.
+"""
+from __future__ import absolute_import
 
-# inspired by
-#Weninger, Tim, William H. Hsu, and Jiawei Han. "CETR: content extraction via
-#    tag ratios." Proceedings of the 19th international conference on
-#    World wide web. ACM, 2010.
 import numpy as np
+
 from .content_extraction_model import ContentExtractionModel
 from .blocks import TagCountBlockifier
 from .kmeans import KMeansFixedOrigin
-
-from _weninger import weninger_sx_sdx
+from ._weninger import weninger_sx_sdx
 
 
 def weninger_features(blocks, train=False):
@@ -20,9 +23,7 @@ def weninger_features(blocks, train=False):
     tagcounts = np.maximum(np.array(
         [block.features['tagcount'] for block in blocks]), 1.0)
     ctr = block_lengths / tagcounts
-    sx_sdx = weninger_sx_sdx(ctr)
-    return sx_sdx
-weninger_features.nfeatures = 2
+    return weninger_sx_sdx(ctr)
 
 
 class WeningerKMeanModel(object):
@@ -43,11 +44,10 @@ def weninger_features_kmeans(blocks, train=False):
     w = WeningerKMeanModel(3)
     sx_sdx = weninger_features(blocks, train)
     return w.predict(sx_sdx)
-weninger_features_kmeans.nfeatures = 1
 
 
 class Weninger(ContentExtractionModel):
+
     def __init__(self, clusters=3, blockifier=TagCountBlockifier, **kwargs):
         features = [weninger_features]
         ContentExtractionModel.__init__(self, blockifier, features, WeningerKMeanModel(clusters), **kwargs)
-

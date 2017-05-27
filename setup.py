@@ -61,7 +61,7 @@ ext_modules = [
 
 setup(
     name             = 'dragnet',
-    version          = '1.0.1',
+    version          = '1.1.0',
     description      = 'Extract the main article content (and optionally comments) from a web page',
     author           = 'Matt Peters, Dan Lecocq',
     author_email     = 'matt@moz.com, dan@moz.com',
@@ -84,16 +84,15 @@ setup(
         ],
     packages         = ['dragnet'],
     package_dir      = {'dragnet':'dragnet'},
-    package_data     = {'dragnet':['pickled_models/*']},
+    package_data     = {'dragnet':['pickled_models/*/*']},
     cmdclass         = {'build_ext': build_ext},
     ext_modules      = ext_modules,
     install_requires = [
         'Cython>=0.21.1',
         'lxml',
-        'scikit-learn>=0.15.2,<=0.16.1',
+        'scikit-learn>=0.15.2,<0.19.0',
         'numpy',
         'scipy',
         'mozsci'
     ]
 )
-
